@@ -3,7 +3,6 @@ SendMode Input
 SetWorkingDir %A_ScriptDir%
 #SingleInstance Force
 SetBatchLines -1
-CoordMode, Mouse, Screen
 SetMouseDelay, 0
 
 FileInstall emoji_happy, %A_WorkingDir%/emoji_happy
@@ -13,8 +12,11 @@ FileInstall emoji_negative, %A_WorkingDir%/emoji_negative
 Gui, Add, TreeView, vMyTree r16 gMyTree
 TV1 := TV_Add("Positive")
 TV2 := TV_Add("Neutral")
-TV3 := TV_Add("Negative")
+TV3 := TV_Add("Table")
+TV4 := TV_Add("Negative")
+TVD := TV_Add("ヽ༼ຈل͜ຈ༽ﾉ")
 GuiControl, -Redraw, MyTreeView 
+Sleep 7
 Loop
 {
 	FileReadLine, tempEmojiVar, emoji_happy, %A_Index%
@@ -33,14 +35,22 @@ Loop
 
 Loop
 {
-	FileReadLine, tempEmojiVar, emoji_negative, %A_Index%
+	FileReadLine, tempEmojiVar, emoji_table, %A_Index%
 	if ErrorLevel
         break
 	TV3C%A_Index% := TV_Add(tempEmojiVar, TV3)
 }
-Sleep 21
+
+Loop
+{
+	FileReadLine, tempEmojiVar, emoji_negative, %A_Index%
+	if ErrorLevel
+        break
+	TV4C%A_Index% := TV_Add(tempEmojiVar, TV4)
+}
+Sleep 7
 GuiControl, +Redraw, MyTreeView 
-Sleep 21
+Sleep 7
 Gui, Show
 return
 
